@@ -5,8 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.quantumrange</groupId>
-    <artifactId>web-util</artifactId>
+    <artifactId>web-utils</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
@@ -20,5 +21,13 @@
             <version>2.4.1</version>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/QuantumRange/web-utils</url>
+        </repository>
+    </distributionManagement>
 
 </project>
