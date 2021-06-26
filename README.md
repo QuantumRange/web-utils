@@ -1,2 +1,2 @@
 # web-util
- A library to query web pages more easily.
+A library to query web pages more easily.
