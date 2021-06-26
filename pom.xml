@@ -6,7 +6,7 @@
 
     <groupId>de.quantumrange</groupId>
     <artifactId>web-utils</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>de.quantumrange</groupId>
             <artifactId>actionlib</artifactId>
-            <version>2.5.0</version>
+            <version>2.5.1</version>
         </dependency>
 
         <!-- Json Parse Stuff -->

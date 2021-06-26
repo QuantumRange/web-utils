@@ -16,10 +16,13 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Is responsible for handling {@link HTTPRequestType#GET} request.
@@ -48,6 +51,12 @@ public class GetWebConnection extends WebConnection<HashMap<String, String>, Get
 		return new RateLimitedAction<>(Web.MANAGER, getRateID(), throwable -> {
 			StringBuilder urlBuilder = new StringBuilder();
 
+			urlBuilder.append(getUrl().toString());
+
+			if (!data.isEmpty() && !urlBuilder.toString().endsWith("?")) urlBuilder.append("?");
+
+			for (String key : data.keySet()) urlBuilder.append(secure(key)).append('=').append(secure(data.get(key)));
+
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
 					.uri(URI.create(urlBuilder.toString()))
@@ -57,7 +66,7 @@ public class GetWebConnection extends WebConnection<HashMap<String, String>, Get
 			try {
 				HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-				return new WebResult<>(sendTime.get(), LocalDateTime.now(), getUrl(), HTTPRequestType.GET,
+				return new WebResult<>(sendTime.get(), LocalDateTime.now(), new URL(urlBuilder.toString()), HTTPRequestType.GET,
 						response.statusCode(), response.body());
 			} catch (IOException | InterruptedException e) {
 				throwable.accept(e);
@@ -68,4 +77,21 @@ public class GetWebConnection extends WebConnection<HashMap<String, String>, Get
 			return true;
 		});
 	}
+
+	public static String secure(String text) {
+		StringBuilder builder = new StringBuilder();
+
+		for (char c : text.toCharArray()) {
+			if ((c >= 48 && c <= 57) ||
+				(c >= 65 && c <= 90) ||
+				(c >= 97 && c <= 122)) {
+				builder.append(c);
+			} else {
+				builder.append("%c%x".formatted('%', (int) c).toUpperCase());
+			}
+		}
+
+		return builder.toString().replaceAll(" ", "+");
+	}
+
 }

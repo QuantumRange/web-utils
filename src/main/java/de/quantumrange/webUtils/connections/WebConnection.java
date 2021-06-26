@@ -8,6 +8,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.quantumrange.actionlib.Action;
 import de.quantumrange.actionlib.impl.actions.RateLimitedAction;
 import de.quantumrange.actionlib.impl.manager.RateLimitedThreadManager;
+import de.quantumrange.webUtils.Web;
 import de.quantumrange.webUtils.connections.impl.DataWebConnection;
 import de.quantumrange.webUtils.connections.impl.GetWebConnection;
 import de.quantumrange.webUtils.models.WebResult;
@@ -84,6 +85,7 @@ public abstract class WebConnection<T, J> {
 		this.url = url;
 		this.rateID = rateID;
 		this.headerProperties = new HashMap<>();
+		Web.MANAGER.registerRateLimit(0, 0L);
 	}
 
 	/**

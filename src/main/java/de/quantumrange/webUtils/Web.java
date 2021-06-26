@@ -29,7 +29,7 @@ public class Web {
 	 * It takes 40% of the available threads.
 	 * If this is too little/much you can simply overwrite the variable.
 	 */
-	public static ActionManager MANAGER = new RateLimitedThreadManager(.4f);
+	public static RateLimitedThreadManager MANAGER = new RateLimitedThreadManager(.4f);
 
 	public static GetWebConnection url(URL url) {
 		return new GetWebConnection(url, 0);
