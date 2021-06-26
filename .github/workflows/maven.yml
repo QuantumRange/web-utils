@@ -22,6 +22,5 @@ jobs:
         java-version: '16'
         distribution: 'adopt'
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: settings.xml # location for the settings.xml file
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file pom.xml -s settings.xml
