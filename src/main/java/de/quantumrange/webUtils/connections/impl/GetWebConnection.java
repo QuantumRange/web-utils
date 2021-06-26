@@ -78,7 +78,7 @@ public class GetWebConnection extends WebConnection<HashMap<String, String>, Get
 		});
 	}
 
-	public static String secure(String text) {
+	private static String secure(String text) {
 		StringBuilder builder = new StringBuilder();
 
 		for (char c : text.toCharArray()) {
