@@ -85,7 +85,7 @@ public class DataWebConnection extends WebConnection<String, DataWebConnection> 
 	 * @return the result of the method: {@link #request(String)} (Object)}.
 	 */
 	public <T> Action<WebResult<String>> requestWithObject(T data, ObjectWriter writer) throws JsonProcessingException {
-		return requestWithObject(writer.writeValueAsString(data));
+		return request(writer.writeValueAsString(data));
 	}
 
 	/**
