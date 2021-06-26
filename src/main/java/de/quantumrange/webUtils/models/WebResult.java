@@ -1,5 +1,8 @@
 package de.quantumrange.webUtils.models;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectReader;
 import de.quantumrange.webUtils.connections.HTTPRequestType;
 import de.quantumrange.webUtils.connections.WebConnection;
 
@@ -37,6 +40,41 @@ public record WebResult<T>(@Nonnull LocalDateTime requestSend, @Nullable LocalDa
 	 */
 	public <O> WebResult<O> map(Function<T, O> map) {
 		return new WebResult<>(requestSend, receiveResponse, url, type, responseCode, map.apply(response));
+	}
+
+	/**
+	 * Parses the JSON to the object
+	 *
+	 * @param <O> to which type the JSON should be parsed.
+	 * @return the object parsed from the JSON. If the response is null, the result is also null.
+	 * @throws JsonProcessingException if the JSON is invalid.
+	 */
+	public <O> O responseJson() throws JsonProcessingException {
+		return responseJson(WebConnection.createObjectMapper().reader());
+	}
+
+	/**
+	 * Parses the JSON to a JsonNode.
+	 *
+	 * @return the object parsed from the JSON. If the response is null, the result is also null.
+	 * @throws JsonProcessingException if the JSON is invalid.
+	 */
+	public JsonNode responseJsonNode() throws JsonProcessingException {
+		if (response == null) return null;
+		return WebConnection.createObjectMapper().readTree(response.toString());
+	}
+
+	/**
+	 * Parses the JSON to the object
+	 *
+	 * @param reader the ObjectReader with which this is to be parsed.
+	 * @param <O> to which type the JSON should be parsed.
+	 * @return the object parsed from the JSON. If the response is null, the result is also null.
+	 * @throws JsonProcessingException if the JSON is invalid.
+	 */
+	public <O> O responseJson(ObjectReader reader) throws JsonProcessingException {
+		if (response == null) return null;
+		return reader.readValue(response.toString());
 	}
 
 	/**

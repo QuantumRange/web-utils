@@ -212,7 +212,13 @@ public abstract class WebConnection<T, J> {
 		}
 	}
 
-	protected ObjectMapper createObjectMapper() {
+	/**
+	 * Creates {@link ObjectMapper} with {@link LocalTime} and {@link LocalDateTime} deserializer.
+	 * All modules are registered.
+	 *
+	 * @return a fully configured {@link ObjectMapper} for all cases.
+	 */
+	public static ObjectMapper createObjectMapper() {
 		ObjectMapper mapper = new ObjectMapper();
 
 		mapper.findAndRegisterModules();
