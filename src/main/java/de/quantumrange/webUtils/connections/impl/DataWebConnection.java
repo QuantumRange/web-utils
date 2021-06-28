@@ -55,9 +55,13 @@ public class DataWebConnection extends WebConnection<String, DataWebConnection> 
 
 		return new RateLimitedAction<>(Web.MANAGER, getRateID(), throwable -> {
 			HttpClient client = HttpClient.newHttpClient();
-			HttpRequest request = HttpRequest.newBuilder()
+			HttpRequest.Builder builder = HttpRequest.newBuilder()
 					.uri(getURI())
-					.method(type.name(), HttpRequest.BodyPublishers.ofString(data))
+					.method(type.name(), HttpRequest.BodyPublishers.ofString(data));
+
+			for (String key : getHeaderProperties().keySet()) builder.header(key, getHeaderProperties().get(key));
+
+			HttpRequest request = builder
 					.build();
 
 			try {

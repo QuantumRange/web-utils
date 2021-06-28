@@ -1,5 +1,7 @@
 package de.quantumrange.webUtils.connections;
 
+import java.util.Arrays;
+
 /**
  * This is the supported HTTPRequest types.
  * For more information:
@@ -48,5 +50,13 @@ public enum HTTPRequestType {
 	 * The PATCH method is used to apply partial modifications to a resource.
 	 */
 	PATCH();
+
+	public static HTTPRequestType getRequestByName(String name) {
+		return Arrays.stream(HTTPRequestType.values())
+				.filter(type -> type.name().equalsIgnoreCase(name))
+				.findFirst()
+				.orElse(null);
+
+	}
 
 }
