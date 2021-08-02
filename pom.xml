@@ -6,7 +6,7 @@
 
     <groupId>de.quantumrange</groupId>
     <artifactId>web-utils</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.5</version>
     <packaging>jar</packaging>
 
     <properties>

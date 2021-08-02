@@ -43,6 +43,10 @@ public class DataWebConnection extends WebConnection<String, DataWebConnection> 
 		this.type = type;
 	}
 
+	public void setBearToken(String bearToken) {
+		addHeader("Authorization", "Bearer " + bearToken);
+	}
+
 	/**
 	 * Sends data to the server using JSON formatting.
 	 *

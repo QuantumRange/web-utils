@@ -53,7 +53,7 @@ public class GetWebConnection extends WebConnection<HashMap<String, String>, Get
 
 			urlBuilder.append(getUrl().toString());
 
-			if (!data.isEmpty() && !urlBuilder.toString().endsWith("?")) urlBuilder.append("?");
+			if (!data.isEmpty() && !urlBuilder.toString().contains("?")) urlBuilder.append("?");
 
 			for (String key : data.keySet()) urlBuilder.append(secure(key)).append('=').append(secure(data.get(key)));
 
